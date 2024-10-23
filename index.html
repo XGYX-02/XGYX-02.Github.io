@@ -584,25 +584,9 @@
 
 
 
-        /* 移动端适配 */
+        /* 移动动端适配 */
 
         @media (max-width: 768px) {
-
-            body {
-
-                font-size: 14px;
-
-            }
-
-
-
-            header {
-
-                height: 25vh;
-
-            }
-
-
 
             h1 {
 
@@ -614,7 +598,7 @@
 
             #beijing-time {
 
-                font-size: 0.9rem;
+                font-size: 1rem;
 
             }
 
@@ -622,7 +606,7 @@
 
             main {
 
-                padding: 0.5rem;
+                padding: 1rem;
 
             }
 
@@ -632,8 +616,6 @@
 
                 grid-template-columns: 1fr;
 
-                gap: 0.5rem;
-
             }
 
 
@@ -642,31 +624,7 @@
 
                 height: auto;
 
-                max-height: 200px;
-
-            }
-
-
-
-            .article {
-
-                padding: 10px;
-
-            }
-
-
-
-            .article h3 {
-
-                font-size: 1.3rem;
-
-            }
-
-
-
-            pre {
-
-                font-size: 11px;
+                max-height: 300px;
 
             }
 
@@ -674,13 +632,11 @@
 
             #favorites-button {
 
-                width: 35px;
+                width: 40px;
 
-                height: 35px;
+                height: 40px;
 
                 right: 10px;
-
-                bottom: 10px;
 
             }
 
@@ -688,9 +644,9 @@
 
             #favorites-modal {
 
-                width: 95%;
+                width: 80%;
 
-                max-width: none;
+                max-width: 300px;
 
             }
 
@@ -706,9 +662,11 @@
 
 
 
-            footer a, footer span {
+            footer span {
 
-                font-size: 0.8rem;
+                margin-top: 5px;
+
+                font-size: 0.9rem;
 
             }
 
@@ -830,34 +788,6 @@
 
         }
 
-
-
-        /* 改进代码显示 */
-
-        pre {
-
-            white-space: pre-wrap;
-
-            word-wrap: break-word;
-
-        }
-
-
-
-        /* 优化全屏图片查看体验 */
-
-        @media (max-width: 768px) {
-
-            .fullscreen-image img {
-
-                max-width: 100%;
-
-                max-height: 100%;
-
-            }
-
-        }
-
     </style>
 
     <!-- 添加 jQuery 引用 -->
@@ -916,25 +846,25 @@
 
             <div class="image-container">
 
-                <img src="./zhaopian/纳西妲02.jpg" alt="纳西妲02">
+                <img src="zhaopian/纳西妲02.jpg" alt="纳西妲02">
 
             </div>
 
             <div class="image-container">
 
-                <img src="./zhaopian/草神纳西妲原神66.jpg" alt="草神纳西妲原神66">
+                <img src="zhaopian/草神纳西妲原神66.jpg" alt="草神纳西妲原神66">
 
             </div>
 
             <div class="image-container">
 
-                <img src="./zhaopian/草神纳西妲原神59.jpg" alt="草神纳西妲原神59">
+                <img src="zhaopian/草神纳西妲原神59.jpg" alt="草神纳西妲原神59">
 
             </div>
 
             <div class="image-container">
 
-                <img src="./zhaopian/1726025850583.jpg" alt="1726025850583">
+                <img src="zhaopian/1726025850583.jpg" alt="1726025850583">
 
             </div>
 
@@ -954,13 +884,7 @@
 
             <h3>main</h3>
 
-            <pre><code class="language-c">
-
-
-
-
-
-#include &lt;REGX52.h&gt;  // 包含单片机的寄存器定义
+            <pre><code class="language-c">#include &lt;REGX52.h&gt;  // 包含单片机的寄存器定义
 
 #include "stdio.h"   // 标准输入输出库
 
@@ -1090,7 +1014,7 @@ rs=0; // 选择指令寄存器
 
 rw=0; // 设置写操作
 
-_nop_(); 
+_nop_(); // 防止编译器优化，保持时序
 
 lcd_data=lcdcmd; // 将命令写入LCD数据寄存器
 
@@ -1120,7 +1044,7 @@ void lcd_wdata(uchar lcddata)
 
 lcd_delay(60); // 等待60个时钟周期
 
-e=0; // 使能引脚低电平
+e=0; // ��能引脚低电平
 
 rs=1; // 选择数据寄存器
 
@@ -1260,7 +1184,6 @@ uint BT2046(uchar Command)
 
 
 
-
     }
 
     for(i=0;i&lt;16;i++)
@@ -1329,9 +1252,7 @@ void main()
 
 
 
-}
-
-</code></pre>
+}</code></pre>
 
         </section>
 
@@ -1573,40 +1494,6 @@ void main()
 
 
 
-        // 检查是否为移动设备
-
-        function isMobile() {
-
-            return window.innerWidth <= 768;
-
-        }
-
-
-
-        // 初始化雪花效果的函数
-
-        function initSnowEffect() {
-
-            if (!isMobile()) {
-
-                $.fn.snow({ 
-
-                    minSize: 5,
-
-                    maxSize: 50,
-
-                    newOn: 800,
-
-                    flakeColor: '#FFFFFF'
-
-                });
-
-            }
-
-        }
-
-
-
         // 页面加载完成后的操作
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1621,43 +1508,25 @@ void main()
 
             lazyLoad();
 
-            fetchHitokoto();
-
-            setInterval(fetchHitokoto, 60000); // 每60秒更新一次
 
 
+            if (window.innerWidth > 768) {
 
-            // 只在非移动端设备上启用雪花效果
+                $.fn.snow({
 
-            initSnowEffect();
+                    minSize: 5,
 
+                    maxSize: 25,
 
+                    newOn: 500,
 
-            Prism.highlightAll();
+                    flakeColor: "#FFFFFF",
 
-        });
+                    fallSpeed: 1,
 
+                    flakeCount: 50
 
-
-        // 监听窗口大小变化，动态添加或移除雪花效果
-
-        window.addEventListener('resize', function() {
-
-            if (!isMobile()) {
-
-                if (!$.fn.snow.interval) {
-
-                    initSnowEffect();
-
-                }
-
-            } else {
-
-                if ($.fn.snow.interval) {
-
-                    $.fn.snow.stop();
-
-                }
+                });
 
             }
 
@@ -1716,18 +1585,6 @@ void main()
             favoritesButton.style.backgroundImage = `url('${randomImage}')`;
 
             favoritesButton.innerHTML = '';
-
-            
-
-            // 调整移动端按钮大小
-
-            if (isMobile()) {
-
-                favoritesButton.style.width = '35px';
-
-                favoritesButton.style.height = '35px';
-
-            }
 
         }
 
@@ -1969,49 +1826,47 @@ void main()
 
 
 
-        // 修改fetchHitokoto函数
+        // 添加一言API函数
 
         function fetchHitokoto() {
 
-            var script = document.createElement('script');
+            fetch('https://v1.hitokoto.cn')
 
-            script.src = 'https://v1.hitokoto.cn/?callback=showHitokoto';
+                .then(response => response.json())
 
-            document.body.appendChild(script);
+                .then(data => {
 
-        }
+                    const hitokotoElement = document.getElementById('hitokoto-text');
 
+                    hitokotoElement.innerText = `${data.hitokoto} —— ${data.from}`;
 
+                })
 
-        // 添加回调函数
+                .catch(error => {
 
-        function showHitokoto(data) {
+                    console.error('Error fetching hitokoto:', error);
 
-            const hitokotoElement = document.getElementById('hitokoto-text');
+                    document.getElementById('hitokoto-text').innerText = '加载一言失败，请稍后再试。';
 
-            if (hitokotoElement) {
-
-                hitokotoElement.innerText = `${data.hitokoto} —— ${data.from}`;
-
-            }
-
-            // 移除script标签
-
-            var scripts = document.getElementsByTagName('script');
-
-            var lastScript = scripts[scripts.length-1];
-
-            if (lastScript.src.includes('hitokoto.cn')) {
-
-                document.body.removeChild(lastScript);
-
-            }
+                });
 
         }
 
 
 
-        // 添加雪花效果
+        // 页面加载时获取一言
+
+        document.addEventListener('DOMContentLoaded', fetchHitokoto);
+
+
+
+        // 每隔一段时间更新一言（例如每60秒）
+
+        setInterval(fetchHitokoto, 60000);
+
+
+
+        // 修改雪花效果函数
 
         (function($) {
 
@@ -2019,27 +1874,31 @@ void main()
 
                 var $flake = $('<div id="snowbox" />').css({
 
-                    'position': 'absolute',
+                    'position': 'fixed',  // 改为 fixed 定位
 
                     'z-index': '9999',
 
-                    'top': '-50px'
+                    'top': '-50px',
+
+                    'pointer-events': 'none'  // 添加此行以防止雪花影响页面交互
 
                 }).html('&#10052;'),
 
-                documentHeight = $(document).height(),
+                documentHeight = $(window).height(),  // 使用窗口高度而不是文档高度
 
-                documentWidth = $(document).width(),
+                documentWidth = $(window).width(),    // 使用窗口宽度
 
                 defaults = {
 
-                    minSize: 10,
+                    minSize: 3,           // 减小最小尺寸
 
-                    maxSize: 20,
+                    maxSize: 15,          // 减小最大尺寸
 
-                    newOn: 1000,
+                    newOn: 1500,          // 增加生成间隔
 
-                    flakeColor: "#AFDAEF"
+                    flakeColor: "#FFFFFF",
+
+                    flakeCount: 30        // 限制雪花数量
 
                 },
 
@@ -2047,47 +1906,77 @@ void main()
 
 
 
+                var flakes = [];
+
+                var activeFlakes = 0;
+
+
+
                 var interval = setInterval(function() {
 
-                    var startPositionLeft = Math.random() * documentWidth - 100,
+                    if (activeFlakes < options.flakeCount) {
 
-                        startOpacity = 0.5 + Math.random(),
+                        var startPositionLeft = Math.random() * documentWidth - 100,
 
-                        sizeFlake = options.minSize + Math.random() * options.maxSize,
+                            startOpacity = 0.5 + Math.random(),
 
-                        endPositionTop = documentHeight - 200,
+                            sizeFlake = options.minSize + Math.random() * (options.maxSize - options.minSize),
 
-                        endPositionLeft = startPositionLeft - 500 + Math.random() * 500,
+                            endPositionTop = documentHeight,
 
-                        durationFall = documentHeight * 10 + Math.random() * 5000;
+                            endPositionLeft = startPositionLeft - 100 + Math.random() * 200,
+
+                            durationFall = documentHeight * 10 + Math.random() * 5000;
 
 
 
-                    $flake.clone().appendTo('body').css({
+                        var flake = $flake.clone().appendTo('body').css({
 
-                        left: startPositionLeft,
+                            left: startPositionLeft,
 
-                        opacity: startOpacity,
+                            opacity: startOpacity,
 
-                        'font-size': sizeFlake,
+                            'font-size': sizeFlake,
 
-                        color: options.flakeColor
+                            color: options.flakeColor
 
-                    }).animate({
+                        }).animate({
 
-                        top: endPositionTop,
+                            top: endPositionTop,
 
-                        left: endPositionLeft,
+                            left: endPositionLeft,
 
-                        opacity: 0.2
+                            opacity: 0.2
 
-                    }, durationFall, 'linear', function() {
+                        }, durationFall, 'linear', function() {
 
-                        $(this).remove();
+                            $(this).remove();
 
-                    });
+                            activeFlakes--;
+
+                        });
+
+
+
+                        flakes.push(flake);
+
+                        activeFlakes++;
+
+                    }
 
                 }, options.newOn);
+
+
+
+                // 添加窗口大小变化时的处理
+
+                $(window).resize(function() {
+
+                    documentHeight = $(window).height();
+
+                    documentWidth = $(window).width();
+
+                });
 
             };
 
@@ -2099,17 +1988,23 @@ void main()
 
         $(function() {
 
-            $.fn.snow({ 
+            if (window.innerWidth > 768) {  // 只在大屏幕上显示雪花
 
-                minSize: 5,
+                $.fn.snow({ 
 
-                maxSize: 50,
+                    minSize: 3,
 
-                newOn: 800,
+                    maxSize: 15,
 
-                flakeColor: '#FFFFFF'
+                    newOn: 1500,
 
-            });
+                    flakeColor: '#FFFFFF',
+
+                    flakeCount: 30
+
+                });
+
+            }
 
         });
 
