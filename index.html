@@ -584,7 +584,7 @@
 
 
 
-        /* 移动动端适配 */
+        /* 移动端适配 */
 
         @media (max-width: 768px) {
 
@@ -598,7 +598,7 @@
 
             header {
 
-                height: 30vh;
+                height: 25vh;
 
             }
 
@@ -606,7 +606,7 @@
 
             h1 {
 
-                font-size: 2rem;
+                font-size: 1.8rem;
 
             }
 
@@ -614,7 +614,7 @@
 
             #beijing-time {
 
-                font-size: 1rem;
+                font-size: 0.9rem;
 
             }
 
@@ -622,7 +622,7 @@
 
             main {
 
-                padding: 1rem;
+                padding: 0.5rem;
 
             }
 
@@ -632,6 +632,8 @@
 
                 grid-template-columns: 1fr;
 
+                gap: 0.5rem;
+
             }
 
 
@@ -640,7 +642,7 @@
 
                 height: auto;
 
-                max-height: 250px;
+                max-height: 200px;
 
             }
 
@@ -656,7 +658,7 @@
 
             .article h3 {
 
-                font-size: 1.5rem;
+                font-size: 1.3rem;
 
             }
 
@@ -664,9 +666,7 @@
 
             pre {
 
-                font-size: 12px;
-
-                overflow-x: auto;
+                font-size: 11px;
 
             }
 
@@ -674,9 +674,9 @@
 
             #favorites-button {
 
-                width: 40px;
+                width: 35px;
 
-                height: 40px;
+                height: 35px;
 
                 right: 10px;
 
@@ -688,7 +688,7 @@
 
             #favorites-modal {
 
-                width: 90%;
+                width: 95%;
 
                 max-width: none;
 
@@ -708,7 +708,7 @@
 
             footer a, footer span {
 
-                font-size: 0.9rem;
+                font-size: 0.8rem;
 
             }
 
@@ -916,25 +916,25 @@
 
             <div class="image-container">
 
-                <img src="zhaopian/纳西妲02.jpg" alt="纳西妲02">
+                <img src="./zhaopian/纳西妲02.jpg" alt="纳西妲02">
 
             </div>
 
             <div class="image-container">
 
-                <img src="zhaopian/草神纳西妲原神66.jpg" alt="草神纳西妲原神66">
+                <img src="./zhaopian/草神纳西妲原神66.jpg" alt="草神纳西妲原神66">
 
             </div>
 
             <div class="image-container">
 
-                <img src="zhaopian/草神纳西妲原神59.jpg" alt="草神纳西妲原神59">
+                <img src="./zhaopian/草神纳西妲原神59.jpg" alt="草神纳西妲原神59">
 
             </div>
 
             <div class="image-container">
 
-                <img src="zhaopian/1726025850583.jpg" alt="1726025850583">
+                <img src="./zhaopian/1726025850583.jpg" alt="1726025850583">
 
             </div>
 
@@ -1090,7 +1090,7 @@ rs=0; // 选择指令寄存器
 
 rw=0; // 设置写操作
 
-_nop_(); // 防止编译器优化，保持时序
+_nop_(); 
 
 lcd_data=lcdcmd; // 将命令写入LCD数据寄存器
 
@@ -1257,6 +1257,7 @@ uint BT2046(uchar Command)
         BT2046_dclk=1;
 
         BT2046_dclk=0;
+
 
 
 
@@ -1572,6 +1573,40 @@ void main()
 
 
 
+        // 检查是否为移动设备
+
+        function isMobile() {
+
+            return window.innerWidth <= 768;
+
+        }
+
+
+
+        // 初始化雪花效果的函数
+
+        function initSnowEffect() {
+
+            if (!isMobile()) {
+
+                $.fn.snow({ 
+
+                    minSize: 5,
+
+                    maxSize: 50,
+
+                    newOn: 800,
+
+                    flakeColor: '#FFFFFF'
+
+                });
+
+            }
+
+        }
+
+
+
         // 页面加载完成后的操作
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1586,25 +1621,43 @@ void main()
 
             lazyLoad();
 
+            fetchHitokoto();
+
+            setInterval(fetchHitokoto, 60000); // 每60秒更新一次
 
 
-            if (window.innerWidth > 768) {
 
-                $.fn.snow({
+            // 只在非移动端设备上启用雪花效果
 
-                    minSize: 5,
+            initSnowEffect();
 
-                    maxSize: 25,
 
-                    newOn: 500,
 
-                    flakeColor: "#FFFFFF",
+            Prism.highlightAll();
 
-                    fallSpeed: 1,
+        });
 
-                    flakeCount: 50
 
-                });
+
+        // 监听窗口大小变化，动态添加或移除雪花效果
+
+        window.addEventListener('resize', function() {
+
+            if (!isMobile()) {
+
+                if (!$.fn.snow.interval) {
+
+                    initSnowEffect();
+
+                }
+
+            } else {
+
+                if ($.fn.snow.interval) {
+
+                    $.fn.snow.stop();
+
+                }
 
             }
 
@@ -1663,6 +1716,18 @@ void main()
             favoritesButton.style.backgroundImage = `url('${randomImage}')`;
 
             favoritesButton.innerHTML = '';
+
+            
+
+            // 调整移动端按钮大小
+
+            if (isMobile()) {
+
+                favoritesButton.style.width = '35px';
+
+                favoritesButton.style.height = '35px';
+
+            }
 
         }
 
@@ -1904,43 +1969,45 @@ void main()
 
 
 
-        // 添加一言API函数
+        // 修改fetchHitokoto函数
 
         function fetchHitokoto() {
 
-            fetch('https://v1.hitokoto.cn')
+            var script = document.createElement('script');
 
-                .then(response => response.json())
+            script.src = 'https://v1.hitokoto.cn/?callback=showHitokoto';
 
-                .then(data => {
-
-                    const hitokotoElement = document.getElementById('hitokoto-text');
-
-                    hitokotoElement.innerText = `${data.hitokoto} —— ${data.from}`;
-
-                })
-
-                .catch(error => {
-
-                    console.error('Error fetching hitokoto:', error);
-
-                    document.getElementById('hitokoto-text').innerText = '加载一言失败，请稍后再试。';
-
-                });
+            document.body.appendChild(script);
 
         }
 
 
 
-        // 页面加载时获取一言
+        // 添加回调函数
 
-        document.addEventListener('DOMContentLoaded', fetchHitokoto);
+        function showHitokoto(data) {
 
+            const hitokotoElement = document.getElementById('hitokoto-text');
 
+            if (hitokotoElement) {
 
-        // 每隔一段时间更新一言（例如每60秒）
+                hitokotoElement.innerText = `${data.hitokoto} —— ${data.from}`;
 
-        setInterval(fetchHitokoto, 60000);
+            }
+
+            // 移除script标签
+
+            var scripts = document.getElementsByTagName('script');
+
+            var lastScript = scripts[scripts.length-1];
+
+            if (lastScript.src.includes('hitokoto.cn')) {
+
+                document.body.removeChild(lastScript);
+
+            }
+
+        }
 
 
 
