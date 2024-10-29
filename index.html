@@ -67,15 +67,19 @@
 
         .image-container img {
             width: 100%;
-            height: 250px; /* 稍微增加高度 */
+            height: 250px;
             object-fit: cover;
             border-radius: 8px;
-            transition: transform 0.3s ease;
-            cursor: pointer; /* 添加鼠标指针样式 */
+            cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+            transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .image-container img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) translateZ(0);
         }
 
         footer {
@@ -117,6 +121,14 @@
         /* 添加这个新样式 */
         .fullscreen-image img {
             box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+            transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         #hitokoto {
@@ -333,6 +345,10 @@
             footer span {
                 margin-top: 5px;
                 font-size: 0.9rem;
+            }
+
+            .image-container img:hover {
+                transform: none;
             }
         }
 
@@ -662,7 +678,7 @@
             const imagePaths = [
                 'zhaopian/纳西妲02.jpg',
                 'zhaopian/草神纳西妲原神66.jpg',
-                'zhaopian/草神纳西妲神59.jpg',
+                'zhaopian/草神纳西妲原神59.jpg',
                 'zhaopian/1726025850583.jpg',
                 'zhaopian/初音未来38.jpg'
             ];
